@@ -1,0 +1,28 @@
+{
+  "name": "yl",
+  "version": "1.0.0",
+  "description": "an example that shows only the most essential parts of flow control with generators",
+  "main": "yl.js",
+  "scripts": {
+    "test": "node --harmony ./test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hij1nx/yl.git"
+  },
+  "keywords": [
+    "generators",
+    "iterators",
+    "co",
+    "example",
+    "simple",
+    "how",
+    "learn"
+  ],
+  "author": "hij1nx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hij1nx/yl/issues"
+  },
+  "homepage": "https://github.com/hij1nx/yl"
+}
