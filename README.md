@@ -31,13 +31,13 @@ module.exports = function yl(gen) {
 # EXAMPLE
 
 ```js
+var fs = require('fs');
+
 yl(function* () {
 
-  readFile = this.thunk(fs.readFile);
-  stat = this.thunk(fs.stat);
+  var f = yield yl(fs.readFile)('./yl.js');
+  var s = yield yl(fs.stat)('./yl.js');
 
-  var f = yield readFile('./yl.js');
-  var s = yield stat('./yl.js');
   assert.equal(f.length, s.size);
 
 });
