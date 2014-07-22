@@ -9,20 +9,14 @@ Requires `>=0.11.x`, and `node --harmony <file>` to use generators.
 # CODE
 
 ```js
-
 module.exports = function yl(gen) {
 
-  gen = gen.call({ 
-    thunk: function (fn) {
-      return function () {
-        var args = [].slice.call(arguments);
-        return function (cb) {
-          args.push(cb);
-          fn.apply(this, args);
-        }
-      }
-    }
-  });
+  if (!gen.prototype.throw) return function () {
+    var args = [].slice.call(arguments);
+    return gen.bind.apply(gen, [null].concat(args));
+  }
+
+  gen = gen();
 
   ~function nextCallback(err, value) {
     if (err) return gen.throw(err);

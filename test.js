@@ -17,7 +17,7 @@ function async(val, cb) {
 //
 yl(function* () {
 
-  async = this.thunk(async);
+  async = yl(async);
 
   var a = yield async(1);
   var b = yield async(2);
@@ -29,12 +29,9 @@ yl(function* () {
   assert.equal(c, 3);
   assert.equal(d, 4);
 
-  readFile = this.thunk(fs.readFile);
-  stat = this.thunk(fs.stat);
+  var f = yield yl(fs.readFile)('./yl.js');
+  var s = yield yl(fs.stat)('./yl.js');
 
-  var f = yield readFile('./yl.js');
-  var s = yield stat('./yl.js');
   assert.equal(f.length, s.size);
-
 });
 
