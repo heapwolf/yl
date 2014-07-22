@@ -1,6 +1,6 @@
 
 module.exports = function yl(f) {
-
+  // if f is not a function*
   if (!f.prototype.throw) return function () {
     var args = [].slice.call(arguments);
     return f.bind.apply(f, [null].concat(args));
