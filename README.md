@@ -9,22 +9,22 @@ Requires `>=0.11.x`, and `node --harmony <file>` to use generators.
 # CODE
 
 ```js
-module.exports = function yl(gen) {
+module.exports = function yl(f) {
 
-  if (!gen.prototype.throw) return function () {
-    var args = [].slice.call(arguments)
-    return gen.bind.apply(gen, [null].concat(args))
+  if (!f.prototype.throw) return function () {
+    var args = [].slice.call(arguments);
+    return f.bind.apply(f, [null].concat(args));
   }
 
-  gen = gen()
+  var gen = f();
 
   ~function nextCallback(err, value) {
-    if (err) return gen.throw(err)
-    var next = gen.next(value)
+    if (err) return gen.throw(err);
+    var next = gen.next(value);
 
     if (!next.done)
-      next.value(nextCallback)
-  }()
+      next.value(nextCallback);
+  }();
 }
 ```
 
