@@ -32,13 +32,13 @@ module.exports = function yl(gen) {
 
 ```js
 var fs = require('fs')
+var assert = require('assert')
 
 yl(function* () {
 
-  var f = yield yl(fs.readFile)('./yl.js')
-  var s = yield yl(fs.stat)('./yl.js')
+  var f = yield yl(fs.readFile)('./index.js')
+  var s = yield yl(fs.stat)('./index.js')
 
   assert.equal(f.length, s.size)
 })
 ```
-
