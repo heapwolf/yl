@@ -12,34 +12,33 @@ Requires `>=0.11.x`, and `node --harmony <file>` to use generators.
 module.exports = function yl(gen) {
 
   if (!gen.prototype.throw) return function () {
-    var args = [].slice.call(arguments);
-    return gen.bind.apply(gen, [null].concat(args));
+    var args = [].slice.call(arguments)
+    return gen.bind.apply(gen, [null].concat(args))
   }
 
-  gen = gen();
+  gen = gen()
 
   ~function nextCallback(err, value) {
-    if (err) return gen.throw(err);
-    var next = gen.next(value);
+    if (err) return gen.throw(err)
+    var next = gen.next(value)
 
     if (!next.done)
-      next.value(nextCallback);
-  }();
+      next.value(nextCallback)
+  }()
 }
 ```
 
 # EXAMPLE
 
 ```js
-var fs = require('fs');
+var fs = require('fs')
 
 yl(function* () {
 
-  var f = yield yl(fs.readFile)('./yl.js');
-  var s = yield yl(fs.stat)('./yl.js');
+  var f = yield yl(fs.readFile)('./yl.js')
+  var s = yield yl(fs.stat)('./yl.js')
 
-  assert.equal(f.length, s.size);
-
-});
+  assert.equal(f.length, s.size)
+})
 ```
 
