@@ -4,7 +4,7 @@
   "description": "an example that shows only the most essential parts of flow control with generators",
   "main": "yl.js",
   "scripts": {
-    "test": "node --harmony ./test.js"
+    "test": "node ./test.js"
   },
   "repository": {
     "type": "git",
