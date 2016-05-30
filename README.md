@@ -24,6 +24,10 @@ const $ = module.exports = f => {
 # EXAMPLE
 
 ```js
+const fs = require('fs')
+const assert = require('assert')
+const $ = require('yl')
+
 $(function* () {
 
   const [statError, s] = yield $(fs.stat)('./index.js')

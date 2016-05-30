@@ -43,9 +43,9 @@ $(function* () {
   const [err0, v] = yield $(bad)('asdf')
   assert.equal(err0.name, 'ReferenceError')
 
-  const [err1, f] = yield $(fs.readFile)('./yl.js');
-  const [err2, s] = yield $(fs.stat)('./yl.js');
+  const [err1, f] = yield $(fs.readFile)('./yl.js')
+  const [err2, s] = yield $(fs.stat)('./yl.js')
 
-  assert.equal(f.length, s.size);
-});
+  assert.equal(f.length, s.size)
+})
 
