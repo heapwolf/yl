@@ -4,7 +4,7 @@ A tiny flow control module that destructures.
 # CODE
 
 ```js
-const $ = module.exports = f => {
+module.exports = f => {
 
   if (!f.prototype.throw) return function() {
     const args = Array.from(arguments)
@@ -24,17 +24,32 @@ const $ = module.exports = f => {
 # EXAMPLE
 
 ```js
+const { run, wrap } = require('yl')
 const fs = require('fs')
 const assert = require('assert')
-const run = to = require('yl')
 
 run(function* () {
 
-  const [statError, s] = yield to (fs.stat)('./index.js')
+  const [statError, s] = yield wrap(fs.stat)('./index.js')
 
   if (statError) return console.error(statError)
 
-  const [readError, f] = yield to (fs.readFile)('./index.js')
+  const [readError, f] = yield wrap(fs.readFile)('./index.js')
+
+  assert.equal(f.length, s.size)
+})
+```
+
+Or you could wrap everything initially...
+
+```js
+const { run, wrap } = require('yl')
+const fs = wrap(require('fs'))
+
+run(function* () {
+
+  const [statError, s] = yield fs.stat('./index.js')
+  const [readError, f] = yield fs.readFile('./index.js')
 
   assert.equal(f.length, s.size)
 })

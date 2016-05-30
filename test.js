@@ -1,7 +1,7 @@
 const fs = require('fs')
 const assert = require('assert')
 
-const $ = require('./yl')
+const { run, wrap } = require('./yl')
 
 //
 // an example async function
@@ -26,9 +26,9 @@ function bad(val, cb) {
 //
 // create a generator to yield in
 //
-$(function* () {
+run(function* () {
 
-  async = $(async)
+  async = wrap(async)
 
   const [erra, a] = yield async(1)
   const [errb, b] = yield async(2)
@@ -40,11 +40,18 @@ $(function* () {
   assert.equal(c, 3)
   assert.equal(d, 4)
 
-  const [err0, v] = yield $(bad)('asdf')
+  const [err0, v] = yield wrap(bad)('asdf')
   assert.equal(err0.name, 'ReferenceError')
 
-  const [err1, f] = yield $(fs.readFile)('./yl.js')
-  const [err2, s] = yield $(fs.stat)('./yl.js')
+  const [err1, f] = yield wrap(fs.readFile)('./yl.js')
+  const [err2, s] = yield wrap(fs.stat)('./yl.js')
+
+  assert.equal(f.length, s.size)
+
+  wrap(fs)
+
+  const [err3, fi] = yield fs.readFile('./yl.js')
+  const [err4, si] = yield fs.stat('./yl.js')
 
   assert.equal(f.length, s.size)
 })
