@@ -1,6 +1,6 @@
 {
   "name": "yl",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "an example that shows only the most essential parts of flow control with generators",
   "main": "yl.js",
   "scripts": {
