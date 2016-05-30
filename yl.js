@@ -7,8 +7,7 @@ exports.run = f => {
   const gen = f()
 
   ~function nextCallback() {
-    const args = Array.from(arguments)
-    const next = gen.next(args)
+    const next = gen.next(Array.from(arguments))
     if (!next.done) next.value(nextCallback)
   }()
 }
