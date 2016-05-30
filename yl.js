@@ -1,4 +1,4 @@
-const yl = module.exports = f => {
+module.exports = f => {
 
   if (!f.prototype.throw) return function() {
     const args = Array.from(arguments)

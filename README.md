@@ -26,15 +26,15 @@ const $ = module.exports = f => {
 ```js
 const fs = require('fs')
 const assert = require('assert')
-const $ = require('yl')
+const run = to = require('yl')
 
-$(function* () {
+run(function* () {
 
-  const [statError, s] = yield $(fs.stat)('./index.js')
+  const [statError, s] = yield to (fs.stat)('./index.js')
 
   if (statError) return console.error(statError)
 
-  const [readError, f] = yield $(fs.readFile)('./index.js')
+  const [readError, f] = yield to (fs.readFile)('./index.js')
 
   assert.equal(f.length, s.size)
 })
