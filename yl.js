@@ -1,19 +1,16 @@
+const yl = module.exports = f => {
 
-module.exports = function yl(f) {
-  // if f is not a function*
-  if (!f.prototype.throw) return function () {
-    var args = [].slice.call(arguments);
-    return f.bind.apply(f, [null].concat(args));
+  if (!f.prototype.throw) return function() {
+    const args = Array.from(arguments)
+    return f.bind.apply(f, [null, ...args])
   }
 
-  var gen = f();
+  const gen = f()
 
-  ~function nextCallback(err, value) {
-    if (err) return gen.throw(err);
-    var next = gen.next(value);
-
-    if (!next.done)
-      next.value(nextCallback);
-  }();
+  ~function nextCallback() {
+    const args = Array.from(arguments)
+    const next = gen.next(args)
+    if (!next.done) next.value(nextCallback)
+  }()
 }
 

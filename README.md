@@ -1,44 +1,38 @@
 # SYNOPSIS
-I wrote this as an example to show only the most essential parts of
-flow control with generators. Don't use this for apps, use something
-robust like [`co`](https://github.com/visionmedia/co).
-
-# REQUIREMENTS
-Requires `>=0.11.x`, and `node --harmony <file>` to use generators.
+A tiny flow control module that destructures.
 
 # CODE
 
 ```js
-module.exports = function yl(f) {
+const $ = module.exports = f => {
 
-  if (!f.prototype.throw) return function () {
-    var args = [].slice.call(arguments);
-    return f.bind.apply(f, [null].concat(args));
+  if (!f.prototype.throw) return function() {
+    const args = Array.from(arguments)
+    return f.bind.apply(f, [null, ...args])
   }
 
-  var gen = f();
+  const gen = f()
 
-  ~function nextCallback(err, value) {
-    if (err) return gen.throw(err);
-    var next = gen.next(value);
-
-    if (!next.done)
-      next.value(nextCallback);
-  }();
+  ~function nextCallback() {
+    const args = Array.from(arguments)
+    const next = gen.next(args)
+    if (!next.done) next.value(nextCallback)
+  }()
 }
 ```
 
 # EXAMPLE
 
 ```js
-var fs = require('fs')
-var assert = require('assert')
+$(function* () {
 
-yl(function* () {
+  const [statError, s] = yield $(fs.stat)('./index.js')
 
-  var f = yield yl(fs.readFile)('./index.js')
-  var s = yield yl(fs.stat)('./index.js')
+  if (statError) return console.error(statError)
+
+  const [readError, f] = yield $(fs.readFile)('./index.js')
 
   assert.equal(f.length, s.size)
 })
 ```
+
