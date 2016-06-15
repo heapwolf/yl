@@ -44,6 +44,7 @@ Or you could wrap everything initially...
 ```js
 const { run, wrap } = require('yl')
 const fs = wrap(require('fs'))
+const assert = require('assert')
 
 run(function* () {
 
